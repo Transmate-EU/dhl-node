@@ -8,7 +8,7 @@ const req = {
     RequestedShipment: {
         ShipmentInfo: {
             DropOffType: 'REQUEST_COURIER',
-            ServiceType: 'Q',
+            ServiceType: 'P',
             Account: auth.accountNumber,
             Currency: 'EUR',
             UnitOfMeasurement: 'SI',
@@ -42,9 +42,9 @@ const req = {
                 },
                 Address: {
                     StreetLines: 'V Parku 2308/10',
-                    City: 'Prague',
-                    PostalCode: '14800',
-                    CountryCode: 'CZ',
+                    City: 'Vienna',
+                    PostalCode: '1100',
+                    CountryCode: 'AT',
                 },
             },
             Recipient: {
@@ -85,6 +85,6 @@ const req = {
     console.log(JSON.stringify(res.response, null, 4));
     fs.writeFileSync('shipmentRequest.request.xml', format(res.requestXml));
     fs.writeFileSync('shipmentRequest.response.xml', res.responseXml);
-    const graphicImage = Buffer.from(res.response.LabelImage[0].GraphicImage, 'base64');
+    const graphicImage = Buffer.from(res.response.LabelImage.GraphicImage||res.response.LabelImage[0].GraphicImage, 'base64');
     fs.writeFileSync('shipmentRequest.response.pdf', graphicImage);
 })();
